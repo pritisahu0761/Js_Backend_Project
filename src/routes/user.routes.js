@@ -1,6 +1,8 @@
 import {Router} from "express"
-import { registerUser } from "../controllers/user.js"
+import { loginUser, registerUser ,logoutUser} from "../controllers/user.js"
 import {upload} from "../middleware/multer.js"
+import jwt from 'jsonwebtoken';
+import { verifyJWT  } from "../middleware/aoth.middleware.js"
 
 const router =Router()
 
@@ -18,6 +20,12 @@ router.route("/register").post(
         ]
     ) ,
     registerUser)
+
+
+router.route("/login").post(loginUser)
+
+// securd routes
+router.route("/logout").post(verifyJWT,logoutUser)
 
 
 //router.post('/register', upload.fields([{ name: 'avatar' }, { name: 'coverImage' }]), registerUser);
